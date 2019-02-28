@@ -10,4 +10,7 @@ install:
 script:
   - nosetests --with-coverage --cover-package=tests && coverage report
 
+after_script:
+- COVERALLS_REPO_TOKEN=os.environ["COVERALLS_TOKEN"]
+
 after_success: coveralls
