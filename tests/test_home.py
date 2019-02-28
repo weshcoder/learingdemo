@@ -11,6 +11,5 @@ class HomeTests(unittest.TestCase):
         response = self.client().get('/home')
         self.assertEqual(response.status_code, 200)
 
-
 if __name__ == '__main__':
     unittest.main()
