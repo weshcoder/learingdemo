@@ -1,16 +1,14 @@
 from flask  import Flask, render_template, url_for
-from flask_sqlalchemy import SQLAlchemy
-from models import db
+from .models import db
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-db = SQLAlchemy()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://DB_USER:PASSWORD@HOST/DATABASE'
 POSTGRES = {
     'user': 'postgres',
     'pw': 'password',
-    'db': 'my_database',
+    'db': 'Flask-Bucket-list',
     'host': 'localhost',
     'port': '5432',
 }

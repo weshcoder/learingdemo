@@ -1,3 +1,6 @@
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
+
 class BaseModel(db.Model):
     """Base data model for all objects"""
 
@@ -9,6 +12,6 @@ class BaseModel(db.Model):
 class YourModel(BaseModel):
     """ model for one of your table """
 
-    __tablename__ = 'my table'
+    __tablename__ = 'firstable'
     
-    #define your model
+#     #define your model
