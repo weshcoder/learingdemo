@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "layout.html" %}
+{% block body %}
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://code.jquery.com/jquery-3.3.1.js">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
@@ -11,31 +10,36 @@
 </head>
 <body>
 
-		 <div class="modal-dialog text-center">
+     <div class="modal-dialog text-center">
           <div class="col-sm-8 main-section">
               <div class="modal-content">
                 
                  <div class="col-12 user-img"> 
-                    <img src="/static/img/face.png">
+                    <img src="{{ url_for('static', filename='img/face.jpg') }} " style="border-radius: 50%">
                  </div>     
 
                  <form action="/signup" method="post" class="col-12">
-                 	<div class="form-group">
-                 		<input type="text" class="form-control" placeholder="Enter Username" required>
-                 	</div>
-                    <div class="form-group">
-                    <input type="Password" class="form-control" placeholder="Enter Password" required>
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter Username" required>
+                   </div>
+                   <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Enter Email" required>
                   </div>
-                 	<div class="form-group">
-                 		<input type="Password" class="form-control" placeholder="Repeat Password" required>
-                 	</div>
+                    <div class="form-group">
+                    <input type="Password" class="form-control form-group-password" placeholder="Enter Password" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="Password" class="form-control form-group-password" placeholder="Repeat Password" required>
+                  </div>
 
-                 	<button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i><a href="/trial" class="submit">Login</button></a>
+                  <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i>  <a href="/trial" class="submit">  Sign up</button></a>
+
+                  
 
                  </form>
 
                  <div class="col-12 forgot">
-                 	<a href="#">Forgot Password?</a>
+                  <a href="#">Forgot Password?</a>
                  </div>
 
               </div>
@@ -43,4 +47,6 @@
         </div>    
 
 </body>
-</html>
+</html> 
+{% endblock %}
+  

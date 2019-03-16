@@ -9,9 +9,10 @@ class BaseModel(db.Model):
     # define here __repr__ and json methods or any common method
     # that you need for all your models
 
-class YourModel(BaseModel):
-    """ model for one of your table """
+class YourModel(BaseModel, db.Model):
+    """ model for one of your table """  
 
     __tablename__ = 'firstable'
     
+    id = db.Column(db.Integer, primary_key = True)
 #     #define your model

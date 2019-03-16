@@ -2,7 +2,7 @@
 
 body {
 	font-family: 'Roboto', sans-serif;
-	background: url(mountain.jpg) no-repeat center center fixed;
+	background: url("../img/mountain.jpg") no-repeat center center fixed;
 	background-size: cover;
 }
 
@@ -45,7 +45,7 @@ body {
 
 .form-group::before {
 	font-family: 'Font Awesome\ 5 Free'; 
-	content: "\f007";
+	content: "\f023";
 	position: absolute;
 	font-size: 22px;
 	color: #555e60;
@@ -53,12 +53,12 @@ body {
 	padding-top: 4px;
 }
 
-.form-group:second-last-of-type::before {
-	content: "\f023";
+.form-group:first-of-type::before {
+	content: "\f007";
 }
 
-.form-group:last-of-type::before {
-	content: "\f023";
+.form-group:nth-of-type(2)::before {
+	content: "\f007";
 }
 
 button {
@@ -73,9 +73,14 @@ button {
 	padding: 7px 14px;
 	border-radius: 5px;
 	border-bottom: 	4px solid #219882;
+	width:50%;
 }
 
 .btn:hover, .btn:focus {
 	background-color: #25a890!important;
 	border-bottom: 	4px solid #25a890!important;
+}
+
+.btn .submit {
+	text-decoration: none;
 }
