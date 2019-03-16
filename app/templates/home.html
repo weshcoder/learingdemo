@@ -7,16 +7,12 @@
      <link rel="stylesheet" type="text/css" href="/static/css/style.css">
      <title>Home</title>
      <link rel="stylesheet" type="text/css" href="/static/css/index.css">
-
-     <style type="text/css">
-         body {
-		 }
-     </style>
+     <link rel="shortcut icon" type="image/png" href="/staticm/img/favicon.png">
 
 </head>
 <body>
-
-    <div class="jumbotron" class="margin-bottom: 0px;">
+    {% block content %}
+        <div class="jumbotron" class="margin-bottom: 0px;">
         <h1>BucketList</h1>
         <p>Create your own BucketList, edit them or delete them. After you have signed in/loged in.</p>
       
@@ -37,7 +33,7 @@
                     <a id="Ab" class="nav-link" href="#">About</a>
                 </li>
                  <li class="nav-item">
-                    <a id="Sign" class="nav-link float-right" href="/signup">Sign up</a>
+                    <a id="Sign" class="nav-link float-right" href="/register">Register</a>
                 </li>
                  <li class="nav-item">
                     <a  class="nav-link float-right" href="/login">Login</a>
@@ -46,5 +42,4 @@
         </div>  
     </nav>
     <img src="/static/img/background4.jpg" class="img-fluid">
-</body>
-</html>
+    {% endblock %}

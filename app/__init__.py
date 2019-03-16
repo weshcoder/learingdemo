@@ -1,9 +1,11 @@
 from flask  import Flask, render_template
 from .models import db
-from .forms import SignupForm
+from forms import RegestrationForm, LoginForm 
 
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] =  'bee3d7c48f45083e800d8a505c396a6b'
 app.config['DEBUG'] = True
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://DB_USER:PASSWORD@HOST/DATABASE'
@@ -29,12 +31,13 @@ def about():
 
 @app.route("/login")
 def login():
-  return render_template("login.html")
+  form = LoginForm()
+  return render_template("login.html", title='Login', form = form) 
 
-@app.route("/signup")
-def signup():
-  form = SignupForm(request.form)
-  return render_template("signup.html", form = form)
+@app.route("/register")
+def register():
+  form = RegestrationForm()
+  return render_template("register.html", title='Register', form = form)
 
 @app.route("/trial")
 def trial():
