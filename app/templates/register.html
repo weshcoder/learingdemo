@@ -9,75 +9,42 @@
 <link rel="stylesheet" type="text/css" href="/static/css/signup.css">
   <title>Register</title>
 
-  <div class="content-section">
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Join Today</legend>
-            <div class="form-group">
-                {{ form.username.label(class="form-control-label") }}
 
-                {% if form.username.errors %}
-                    {{ form.username(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.username.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.username(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
-                {% if form.email.errors %}
-                    {{ form.email(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.email.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.email(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.password.label(class="form-control-label") }}
-                {% if form.password.errors %}
-                    {{ form.password(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.password.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.password(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.confirm_password.label(class="form-control-label") }}
-                {% if form.confirm_password.errors %}
-                    {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.confirm_password.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.confirm_password(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
-        </div>
-    </form>
-</div>
-<div class="border-top pt-3">
-    <small class="text-muted">
-        Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
-    </small>
-</div>
+     <div class="modal-dialog text-center">
+          <div class="col-sm-8 main-section">
+              <div class="modal-content">
+                
+                 <div class="col-12 user-img"> 
+                    <img src="{{ url_for('static', filename='img/face.jpg') }} " style="border-radius: 50%">
+                 </div>     
+
+                 <form action="/signup" method="post" action="" class="col-12">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter Username" required>
+                   </div>
+                   <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Enter Email" required>
+                  </div>
+                    <div class="form-group">
+                    <input type="Password" class="form-control form-group-password" placeholder="Enter Password" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="Password" class="form-control form-group-password" placeholder="Repeat Password" required>
+                  </div>
+
+                  <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i>  <a href="" class="submit"></button></a>
+
+                  
+
+                 </form>
+
+                 <div class="col-12 forgot">
+                  <a href="#">Forgot Password?</a>
+                 </div>
+
+              </div>
+          </div>
+        </div>    
 
 
 {% endblock %}
