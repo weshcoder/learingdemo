@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One');
+
+body{
+font-family: 'Rubik Mono One', sans-serif;
+background-color: #7FB7D1;
+padding : 120px;
+text-align: center;
+}
+
+.words {
+    color: #fff;
+    line-height: 1;
+}
+
+.words span {
+    font-size: 10vw;
+    display: inline-block;
+    animation:move 2s ease-in-out infinite;
+}
+
+@keyframes move{
+    0% {
+        transform: translate(-33%,0)
+    }
+
+    50% {
+        text-shadow: 0, 15px, 40 rgba(0,0,0,.6);
+    }
+    100% {
+        transform: translate(33%,0)
+    }
+}

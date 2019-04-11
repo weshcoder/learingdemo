@@ -1,47 +1,35 @@
+
+
 {% extends "home.html" %}
 {% block content %}
 
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="https://code.jquery.com/jquery-3.3.1.js">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
+    
 
 <link rel="stylesheet" type="text/css" href="/static/css/signup.css">
+{% from '_formhelpers.html' import render_field %}
   <title>Register</title>
-
-
-     <div class="modal-dialog text-center">
+    <div class="modal-dialog text-center">
           <div class="col-sm-8 main-section">
               <div class="modal-content">
                 
                  <div class="col-12 user-img"> 
-                    <img src="{{ url_for('static', filename='img/face.jpg') }} " style="border-radius: 50%">
-                 </div>     
-
-                 <form action="/signup" method="post" action="" class="col-12">
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Enter Username" required>
-                   </div>
-                   <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Enter Email" required>
-                  </div>
-                    <div class="form-group">
-                    <input type="Password" class="form-control form-group-password" placeholder="Enter Password" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="Password" class="form-control form-group-password" placeholder="Repeat Password" required>
-                  </div>
-
-                  <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i>  <a href="" class="submit"></button></a>
-
-                  
-
-                 </form>
-
-                 <div class="col-12 forgot">
-                  <a href="#">Forgot Password?</a>
+                    <img src ="{{ url_for('static', filename='img/face.jpg') }} " style="border-radius: 50%">
                  </div>
-
+                 <form action="/register" method="post" class="col-12">
+                  <div class="form-group">
+                    {{render_field(form.Username)}}
+                  </div>
+                  <div class="form-group">
+                    {{render_field(form.Email)}}
+                  </div>
+                  <div class="form-group">
+                    {{render_field(form.Password)}}
+                  </div>
+                  <div class="form-group">
+                    {{render_field(form.Repeat_Password)}}
+                  </div>
+                  <form>
+                  <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Register</button>
               </div>
           </div>
         </div>    
