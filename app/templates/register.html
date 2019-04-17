@@ -1,39 +1,49 @@
-
-
 {% extends "home.html" %}
 {% block content %}
 
-    
-
 <link rel="stylesheet" type="text/css" href="/static/css/signup.css">
 {% from '_formhelpers.html' import render_field %}
-  <title>Register</title>
-    <div class="modal-dialog text-center">
-          <div class="col-sm-8 main-section">
-              <div class="modal-content">
-                
-                 <div class="col-12 user-img"> 
-                    <img src ="{{ url_for('static', filename='img/face.jpg') }} " style="border-radius: 50%">
-                 </div>
-                 <form action="/register" method="post" class="col-12">
-                  <div class="form-group">
-                    {{render_field(form.Username)}}
-                  </div>
-                  <div class="form-group">
-                    {{render_field(form.Email)}}
-                  </div>
-                  <div class="form-group">
-                    {{render_field(form.Password)}}
-                  </div>
-                  <div class="form-group">
-                    {{render_field(form.Repeat_Password)}}
-                  </div>
-                  <form>
-                  <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Register</button>
-              </div>
-          </div>
-        </div>    
+<title>Register</title>
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<div class="modal-dialog text-center">
+  <div class="col-sm-8 main-section">
+    <div class="modal-content">
+
+      <div class="col-12 user-img">
+        <img src="{{ url_for('static', filename='img/face.jpg') }} " style="border-radius: 50%">
+      </div>
+
+      <form action="/register" method="POST" class="col-12">
+        <div class="form-group">
+          {{render_field(form.Username)}}
+        </div>
+
+        <div class="form-group">
+          {{render_field(form.Email)}}
+        </div>
+
+        <div class="form-group">
+          {{render_field(form.Password)}}
+        </div>
+
+        <div class="form-group">
+          {{render_field(form.Repeat_Password)}}
+        </div>
+
+        <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Register</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
-  
