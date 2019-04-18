@@ -30,11 +30,25 @@ def about():
     return render_template('about.html')
 
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
-    return render_template("login.html", title='Login', form=form)
+    form = LoginForm(request.form)
 
+    if request.method == 'POST' and form.validate():
+        email = form.Email.data
+        password = form.Password.data
+
+        user = Users.query.filter_by(email=email).first()
+
+        if user and user.password == password:
+            flash(f'Congratulations, you logged in!')
+            return redirect(url_for('home'))
+
+        flash(f'Email or password incorrect')
+        return redirect(url_for('login'))
+
+    return render_template("login.html", title='Login', form=form)
+    
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
