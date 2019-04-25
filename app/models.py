@@ -1,7 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+
 db = SQLAlchemy()
 
-class BaseModel(db.Model):
+class BaseModel(db.Model):   
     """Base data model for all objects"""
 
     __abstract__ = True
@@ -17,6 +19,8 @@ class YourModel(BaseModel, db.Model):
     id = db.Column(db.Integer, primary_key = True)
 #     #define your model
 
+
+
 class Users(BaseModel, db.Model):
     __tablename__ = 'users'
 
@@ -28,7 +32,10 @@ class Users(BaseModel, db.Model):
     def __init__(self, username, email, password):
         self.username = username  
         self.email = email
-        self.password = password
+        self.password = Bcrypt().generate_password_hash(password).decode()
+
+    def password_is_valid(self, password):
+        return Bcrypt().check_password_hash(self.password, password)   
 
     def save(self):
         db.session.add(self)

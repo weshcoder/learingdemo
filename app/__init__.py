@@ -1,9 +1,11 @@
 from flask import Flask, render_template, flash, redirect, request, url_for
 from .models import db, Users
 from .forms import RegistrationForm, LoginForm
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
+
 
 app.config['SECRET_KEY'] = 'bee3d7c48f45083e800d8a505c396a6b'
 app.config['DEBUG'] = True
@@ -37,22 +39,23 @@ def login():
     if request.method == 'POST' and form.validate():
         email = form.Email.data
         password = form.Password.data
-
         user = Users.query.filter_by(email=email).first()
 
-        if user and user.password == password:
+        if user and user.password_is_valid(password):
             flash(f'Congratulations, you logged in!')
-            return redirect(url_for('home'))
+            return redirect(url_for('yourbucketlist'))
 
         flash(f'Email or password incorrect')
         return redirect(url_for('login'))
 
     return render_template("login.html", title='Login', form=form)
+
+
     
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm(request.form)
+    form = RegistrationForm(request.form)   
 
     if request.method == 'POST' and form.validate():
         username = form.Username.data
@@ -66,12 +69,6 @@ def register():
 
     return render_template("register.html", title='Register', form=form)
 
-
-@app.route("/trial")
-def trial():
-    return render_template("trial.html")
-
-
-@app.route('/logged')
-def logged():
-    return render_template('logged.html')
+@app.route('/yourbucketlist')
+def yourbucketlist():
+    return render_template('bucketlist.html')
