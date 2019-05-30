@@ -1,74 +1,80 @@
-from flask import Flask, render_template, flash, redirect, request, url_for
-from .models import db, Users
-from .forms import RegistrationForm, LoginForm
+import os
+from flask import Flask, render_template, flash, redirect, request, url_for, session
 from flask_bcrypt import Bcrypt
+from flask_api import FlaskAPI
+from flask_sqlalchemy import SQLAlchemy
 
+# local import
+from instance.config import app_config
 
-app = Flask(__name__)
+# intialialize sql-SQLAlchemy
+db = SQLAlchemy()
 
+from app.forms import RegistrationForm, LoginForm
+from app.models import Users
 
-app.config['SECRET_KEY'] = 'bee3d7c48f45083e800d8a505c396a6b'
-app.config['DEBUG'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:marthairungu123#@localhost/Flask-Bucket-list'
-POSTGRES = {
-    'user': 'postgres',
-    'pw': 'marthairungu123#',
-    'db': 'Flask-Bucket-list',
-    'host': 'localhost',
-    'port': '5432',
-}
-db.init_app(app)
+def create_app(config_name):
+    app = FlaskAPI(__name__, instance_relative_config=True)
+    app.config.from_object(app_config[config_name])
+    app.config.from_pyfile('config.py')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db.init_app(app)
 
+    @app.route("/")
+    def home():
+        return render_template('home.html')
 
-@app.route("/")
-@app.route("/home")
-def home():
-    return render_template('home.html')
+    @app.route("/about")
+    def about():
+        return render_template('about.html')
 
+    @app.route("/auth/login", methods=['GET', 'POST'])
+    def login():
+        form = LoginForm(request.form)
 
-@app.route("/about")
-def about():
-    return render_template('about.html')
+        if request.method == 'POST' and form.validate():
+            email = form.Email.data
+            password = form.Password.data
+            user = Users.query.filter_by(email=email).first()
 
+            if user and user.password_is_valid(password):
+                # Create a session for our user
+                session["user"] = user
+                flash(f'Congratulations, you logged in!')
+                return redirect(url_for('yourbucketlist'))
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    form = LoginForm(request.form)
+            flash(f'Email or password incorrect')
+            return redirect(url_for('/auth/login'))
 
-    if request.method == 'POST' and form.validate():
-        email = form.Email.data
-        password = form.Password.data
-        user = Users.query.filter_by(email=email).first()
+        return render_template("login.html", title='Login', form=form)
 
-        if user and user.password_is_valid(password):
-            flash(f'Congratulations, you logged in!')
-            return redirect(url_for('yourbucketlist'))
+    @app.route("/auth/register", methods=['GET', 'POST'])
+    def register():
+        form = RegistrationForm(request.form)
 
-        flash(f'Email or password incorrect')
-        return redirect(url_for('login'))
+        if request.method == 'POST' and form.validate():
+            username = form.Username.data
+            email = form.Email.data
+            password = form.Password.data
 
-    return render_template("login.html", title='Login', form=form)
+            user = Users(username=username, email=email, password=password)
+            user.save()
+            flash('Congratulations, you are now a registered user!')
+            return redirect(url_for('login'))
 
+        return render_template("register.html", title='Register', form=form)
 
-    
+    @app.route('/yourbucketlist')
+    def yourbucketlist():
+        user = session["user"]
+        return render_template('bucketlist.html', user=user.username)
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm(request.form)   
+    @app.route('/auth/reset')
+    def reset():
+        return render_template('reset.html')
 
-    if request.method == 'POST' and form.validate():
-        username = form.Username.data
-        email = form.Email.data
-        password = form.Password.data
+    # import authentication blurprint and register it on the app
+    from .auth import auth_blueprint
+    app.register_blueprint(auth_blueprint)
 
-        user = Users(username=username, email=email, password=password)
-        user.save()
-        flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
-
-    return render_template("register.html", title='Register', form=form)
-
-@app.route('/yourbucketlist')
-def yourbucketlist():
-    return render_template('bucketlist.html')
+    return app

@@ -15,3 +15,5 @@ class LoginForm(Form):
     remember = BooleanField('Remember Me')
     Submit = SubmitField('Login')   
 
+class EmailForm(Form):
+    email = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=40)])

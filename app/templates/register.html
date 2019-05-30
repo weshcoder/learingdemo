@@ -23,7 +23,7 @@
         <img src="{{ url_for('static', filename='img/face.jpg') }} " style="border-radius: 50%">
       </div>
 
-      <form action="/register" method="POST" class="col-12">
+      <form action="/auth/register" method="POST" class="col-12">
         <div class="form-group">
           {{render_field(form.Username)}}
         </div>
