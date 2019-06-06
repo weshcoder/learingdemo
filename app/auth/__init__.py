@@ -1,5 +1,6 @@
-from . import views
 from flask import Blueprint
 
-# This instant of a Blueprint thay represents the authentication
+# This instance of a Blueprint that represents the authentication blueprint
 auth_blueprint = Blueprint('auth', __name__)
+
+from . import views

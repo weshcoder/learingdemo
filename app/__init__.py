@@ -48,22 +48,7 @@ def create_app(config_name):
 
         return render_template("login.html", title='Login', form=form)
 
-    @app.route("/auth/register", methods=['GET', 'POST'])
-    def register():
-        form = RegistrationForm(request.form)
-
-        if request.method == 'POST' and form.validate():
-            username = form.Username.data
-            email = form.Email.data
-            password = form.Password.data
-
-            user = Users(username=username, email=email, password=password)
-            user.save()
-            flash('Congratulations, you are now a registered user!')
-            return redirect(url_for('login'))
-
-        return render_template("register.html", title='Register', form=form)
-
+    
     @app.route('/yourbucketlist')
     def yourbucketlist():
         user = session["user"]
