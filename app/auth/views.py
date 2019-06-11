@@ -17,7 +17,6 @@ class RegistrationView(MethodView):
         form = RegistrationForm(request.form)
         return render_template("register.html", title='Register', form=form)
 
-
     def post(self):
         """Handle POST request for this view. Url ---> /auth/register"""
 
@@ -51,7 +50,47 @@ class RegistrationView(MethodView):
             return render_template("register.html", title='Register', form=form)
 
 
+class LoginView(MethodView):
+    """This class-based view handles user login and access token generation."""
+    def get(self):
+        form = LoginForm(request.form)
+        return render_template("login.html", title='Login', form=form)
+
+    def post(self):
+        """Handle POST request for this view. Url ---> /auth/login"""
+        # Query to see if the user already exists
+        form = LoginForm(request.form)
+        user = Users.query.filter_by(email=form.Email.data).first()
+
+        if user:
+            if form.validate():
+                try:
+                    email = form.Email.data
+                    password = form.Password.data
+                    return render_template("login.html", title='Login', form=form)
+
+                    flash("You have logged in")
+                    return redirect(url_for("home"))
+
+                except Exception as e:
+                    # An error occured , therefore return a string message containing the error
+                    flash("An error occured")
+
+                    return render_template("login.html", title='Login', form=form)
+        else:
+            # If the user does not excist We don't allow the login form
+            flash("That user doesn't excist")
+            return render_template("login.html", title='Login', form=form)
+
 registration_view = RegistrationView.as_view('register_view')
+login_view = LoginView.as_view('login_view')
+# Define the rule for the registration url --->  /auth/register
+# Then add the rule to the blueprint
+auth_blueprint.add_url_rule(
+    '/auth/login',
+    view_func=login_view,
+    methods=['POST', 'GET'])
+
 # Define the rule for the registration url --->  /auth/register
 # Then add the rule to the blueprint
 auth_blueprint.add_url_rule(
