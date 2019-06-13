@@ -24,9 +24,9 @@ def create_app(config_name):
     def home():
         return render_template('home.html')
 
-    @app.route("/bucketlist")
-    def bucketlist():
-        return render_template("logpage.html")
+    # @app.route("/bucketlist")
+    # def bucketlist():
+    #     return render_template("logpage.html")
 
     @app.route("/about")
     def about():
@@ -40,6 +40,8 @@ def create_app(config_name):
     @app.route('/auth/reset')
     def reset():
         return render_template('reset.html')
+
+
 
     # import authentication blurprint and register it on the app
     from .auth import auth_blueprint

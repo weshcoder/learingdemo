@@ -13,15 +13,6 @@ class BaseModel(db.Model):
     # that you need for all your models
 
 
-class YourModel(BaseModel, db.Model):
-    """ model for one of your table """
-
-    __tablename__ = 'firstable'
-
-    id = db.Column(db.Integer, primary_key=True)
-#     #define your models
-
-
 class Users(BaseModel, db.Model):
     __tablename__ = 'users'
 
@@ -81,4 +72,30 @@ class Users(BaseModel, db.Model):
 
     def __repr__(self):
         return 'User: {}'.format(self.username)
+
+class Bucketlist(BaseModel, db.Model):
+    __tablename__ = 'bucketlists'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, unique=True)
+    description = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __init__(self, title, description, user_id):
+        self.title = title
+        self.description = description
+        self.user_id = user_id
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.sessino.commit()
+        
+
+    def __repr__(self):
+        return 'Bucketlist: {}'.format(self.title)
+
 # DECODING IS LIKE MAKING SCENSE OUT OF THE ENCODED AREA
