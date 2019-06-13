@@ -24,7 +24,7 @@ class RegistrationView(MethodView):
         form = RegistrationForm(request.form)
         user = Users.query.filter_by(email=form.Email.data).first()
 
-        if not user:
+        if user == None:
             if form.validate():
                 # There is no user so we'll try to register them
                 try:
@@ -35,12 +35,12 @@ class RegistrationView(MethodView):
                     user.save()
 
                     flash('Congratulations, you are now a registered user!')
-                    return redirect(url_for('login'))
+                    return redirect(url_for('auth.login_view'))
                     # return a response notifying the user that they registered successfully
 
                 except Exception as e:
                     # An error occured, therefore return a string message containing the error
-                    flash('An error occured!')
+                    flash("An error occured")
 
                     return render_template("register.html", title='Register', form=form)
         else:
@@ -67,10 +67,14 @@ class LoginView(MethodView):
                 try:
                     email = form.Email.data
                     password = form.Password.data
+                    if user and user.password_is_valid(password):
+                        # Generate the access token. This will be used as the authorization header
+                        access_token = user.generate_token(user.id)
+                        return redirect(url_for("bucketlist"))
+
+                    flash('Email or Password incorrect')
                     return render_template("login.html", title='Login', form=form)
 
-                    flash("You have logged in")
-                    return redirect(url_for("home"))
 
                 except Exception as e:
                     # An error occured , therefore return a string message containing the error
@@ -79,7 +83,7 @@ class LoginView(MethodView):
                     return render_template("login.html", title='Login', form=form)
         else:
             # If the user does not excist We don't allow the login form
-            flash("That user doesn't excist")
+            flash("That user doesn't exist")
             return render_template("login.html", title='Login', form=form)
 
 registration_view = RegistrationView.as_view('register_view')

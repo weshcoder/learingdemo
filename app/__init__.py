@@ -24,30 +24,13 @@ def create_app(config_name):
     def home():
         return render_template('home.html')
 
+    @app.route("/bucketlist")
+    def bucketlist():
+        return render_template("logpage.html")
+
     @app.route("/about")
     def about():
         return render_template('about.html')
-
-    # @app.route("/auth/login", methods=['GET', 'POST'])
-    # def login():
-    #     form = LoginForm(request.form)
-    #
-    #     if request.method == 'POST' and form.validate():
-    #         email = form.Email.data
-    #         password = form.Password.data
-    #         user = Users.query.filter_by(email=email).first()
-    #
-    #         if user and user.password_is_valid(password):
-    #             # Create a session for our user
-    #             session["user"] = user
-    #             flash(f'Congratulations, you logged in!')
-    #             return redirect(url_for('yourbucketlist'))
-    #
-    #         flash(f'Email or password incorrect')
-    #         return redirect(url_for('/auth/login'))
-    #
-    #     return render_template("login.html", title='Login', form=form)
-
 
     @app.route('/yourbucketlist')
     def yourbucketlist():
