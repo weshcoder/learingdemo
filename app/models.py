@@ -79,7 +79,7 @@ class Bucketlist(BaseModel, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, unique=True)
     description = db.Column(db.Text)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __init__(self, title, description, user_id):
         self.title = title
@@ -93,7 +93,7 @@ class Bucketlist(BaseModel, db.Model):
     def delete(self):
         db.session.delete(self)
         db.sessino.commit()
-        
+
 
     def __repr__(self):
         return 'Bucketlist: {}'.format(self.title)

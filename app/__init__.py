@@ -24,27 +24,15 @@ def create_app(config_name):
     def home():
         return render_template('home.html')
 
-    # @app.route("/bucketlist")
-    # def bucketlist():
-    #     return render_template("logpage.html")
-
     @app.route("/about")
     def about():
         return render_template('about.html')
 
-    @app.route('/yourbucketlist')
-    def yourbucketlist():
-        user = session["user"]
-        return render_template('bucketlist.html', user=user.username)
-
-    @app.route('/auth/reset')
-    def reset():
-        return render_template('reset.html')
-
-
-
     # import authentication blurprint and register it on the app
     from .auth import auth_blueprint
+    from .bucketList import bucketlist_blueprint
+
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(bucketlist_blueprint)
 
     return app

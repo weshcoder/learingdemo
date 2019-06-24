@@ -3,7 +3,7 @@
 from . import auth_blueprint
 
 from flask.views import MethodView
-from flask import make_response, request, jsonify, render_template, flash, redirect, url_for
+from flask import make_response, request, jsonify, render_template, flash, redirect, url_for, session
 from app.models import Users
 
 from app.forms import RegistrationForm, LoginForm
@@ -70,11 +70,10 @@ class LoginView(MethodView):
                     if user and user.password_is_valid(password):
                         # Generate the access token. This will be used as the authorization header
                         access_token = user.generate_token(user.id)
-                        return redirect(url_for("bucketlist"))
-
-                    flash('Email or Password incorrect')
-                    return render_template("login.html", title='Login', form=form)
-
+                        if access_token:
+                            session['user_token'] = access_token
+                            flash("Logged in!!")
+                            return redirect(url_for("bucketlist.bucketlist_view"))
 
                 except Exception as e:
                     # An error occured , therefore return a string message containing the error

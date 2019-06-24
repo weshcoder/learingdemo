@@ -9,8 +9,7 @@ from app.forms import BucketListForm
 
 class BucketlistView(MethodView):
     def get(self):
-        form = BucketListForm(request.form)
-        return render_template("bucketlist", title="Bucketlist", form=form)
+        return render_template("bucketlist.html ")
 
 bucketlist_view = BucketlistView.as_view('bucketlist_view')
 
