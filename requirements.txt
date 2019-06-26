@@ -47,6 +47,7 @@ pexpect==4.6.0
 pickleshare==0.7.5
 pluggy==0.8.0
 prompt-toolkit==2.0.7
+psycopg2==2.8.3
 psycopg2-binary==2.8.2
 ptyprocess==0.6.0
 py==1.7.0
@@ -59,6 +60,7 @@ pylint==2.2.2
 pytest==4.0.1
 python-coveralls==2.9.1
 python-dateutil==2.8.0
+python-dotenv==0.10.3
 python-editor==1.0.4
 PyYAML==3.13
 requests==2.21.0
