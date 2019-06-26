@@ -46,7 +46,7 @@ class RegistrationView(MethodView):
         else:
             # There is an existing user. We don't want to register users twice
             # Return a message to the user telling them that they they already exist
-            flash('A user with that email already excits')
+            flash('A user with that email already exists')
             return render_template("register.html", title='Register', form=form)
 
 
@@ -74,6 +74,11 @@ class LoginView(MethodView):
                             session['user_token'] = access_token
                             flash("Logged in!!")
                             return redirect(url_for("bucketlist.bucketlist_view"))
+
+                    else: 
+                        flash("Password or email is invalid")
+
+                        return render_template("login.html", title='Login', form=form)        
 
                 except Exception as e:
                     # An error occured , therefore return a string message containing the error
